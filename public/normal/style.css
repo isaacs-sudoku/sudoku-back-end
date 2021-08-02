@@ -2,7 +2,7 @@ p {
     display: flex;
 }
 
-div {
+div, input {
     margin-left: 1px;
     border: 1px;
     border-color: black;
@@ -25,4 +25,9 @@ span {
 .break {
     margin: 20px;
     border-style: none;
+}
+
+input {
+    width: 21px;
+    color:blue;
 }
