@@ -27,11 +27,12 @@ async function renderPuzzle() {
   while (i < 9) {
     let j = 0;
     const row = document.createElement('p');
+    row.className = 'row';
     while (j < 9) {
       const cell = document.createElement('div');
       cell.value = puzzle[i][j];
       if (cell.value === '0')
-        cell.textContent = '_';
+        cell.textContent = ' ';
       else
         cell.textContent = puzzle[i][j];
       if (j === 3 || j === 6){
@@ -46,7 +47,8 @@ async function renderPuzzle() {
     console.log(row);
     puzzleRender.append(row);
     if (i === 2 || i === 5){
-      const line = document.createElement('br');
+      const line = document.createElement('div');
+      line.className = 'break';
       puzzleRender.append(line);
     }
     i++;
