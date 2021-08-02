@@ -1,23 +1,28 @@
 const puzzleRender = document.getElementById('puzzle');
 
 async function getPuzzle() {
-  const { body } = await fetch('http://localhost:8000/api/v1/puzzle/', { method: 'POST', mode: 'no-cors' });
-  console.log(body);
+  let unsolved = {};
+  const { body } = await fetch('http://localhost:8000/api/v1/puzzle/', { method: 'POST', mode: 'no-cors' })
+    .then(response => response.json())
+    .then(data => unsolved = data[0]);
   const puzzle = [];
-  puzzle[0] = body[0].row1.split(',');
-  puzzle[1] = body[0].row2.split(',');
-  puzzle[2] = body[0].row3.split(',');
-  puzzle[3] = body[0].row4.split(',');
-  puzzle[4] = body[0].row5.split(',');
-  puzzle[5] = body[0].row6.split(',');
-  puzzle[6] = body[0].row7.split(',');
-  puzzle[7] = body[0].row8.split(',');
-  puzzle[8] = body[0].row9.split(',');
+  puzzle[0] = unsolved.row1.split(',');
+  puzzle[1] = unsolved.row2.split(',');
+  puzzle[2] = unsolved.row3.split(',');
+  puzzle[3] = unsolved.row4.split(',');
+  puzzle[4] = unsolved.row5.split(',');
+  puzzle[5] = unsolved.row6.split(',');
+  puzzle[6] = unsolved.row7.split(',');
+  puzzle[7] = unsolved.row8.split(',');
+  puzzle[8] = unsolved.row9.split(',');
 
   return puzzle;
 }
 
-function renderPuzzle(puzzle) {
+async function renderPuzzle() {
+  let puzzle = [];
+  puzzle = await getPuzzle()
+    .then(data => puzzle = data);
   let i = 0;
   while (i < 9) {
     let j = 0;
@@ -25,14 +30,23 @@ function renderPuzzle(puzzle) {
     while (j < 9) {
       const cell = document.createElement('div');
       cell.value = puzzle[i][j];
-      row.appendChild(cell);
+      cell.textContent = puzzle[i][j];
+      row.append(cell);
       j++;
     }
     row.id = i;
-    puzzleRender.appendChild(row);
+    console.log(row);
+    puzzleRender.append(row);
     i++;
   }
 }
-const puzzle = getPuzzle();
-console.log(puzzle);
-renderPuzzle(puzzle);
+
+function findById(data, id) {
+  data = data.map(item => {
+    if (item.id === id)
+      return item;
+  });
+  return 0;
+}
+const puzzle = renderPuzzle();
+puzzleRender.append('hi');
