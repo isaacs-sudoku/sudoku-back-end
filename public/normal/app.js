@@ -30,13 +30,25 @@ async function renderPuzzle() {
     while (j < 9) {
       const cell = document.createElement('div');
       cell.value = puzzle[i][j];
-      cell.textContent = puzzle[i][j];
+      if (cell.value === '0')
+        cell.textContent = '_';
+      else
+        cell.textContent = puzzle[i][j];
+      if (j === 3 || j === 6){
+        const horizLine = document.createElement('span');
+        horizLine.textContent = '     ';
+        row.appendChild(horizLine);
+      }
       row.append(cell);
       j++;
     }
     row.id = i;
     console.log(row);
     puzzleRender.append(row);
+    if (i === 2 || i === 5){
+      const line = document.createElement('br');
+      puzzleRender.append(line);
+    }
     i++;
   }
 }
@@ -49,4 +61,4 @@ function findById(data, id) {
   return 0;
 }
 const puzzle = renderPuzzle();
-puzzleRender.append('hi');
+puzzleRender.append('hi\n');
