@@ -8,10 +8,18 @@ describe('demo routes', () => {
     return setup(pool);
   });
   it('tests backend generation', async () => {
-    const res = await request(app)
-      .post('/api/v1/puzzle')
-      .send({ difficulty: 0.5 });
-    
-    expect(res.body).toEqual([]);
+    let res = '';
+    while (!res) {
+      res = await request(app)
+        .post('/api/v1/puzzle')
+        .send({ body: 0.7 });
+    }
+    expect(res.body.length).toEqual(2); //this was really annoying becasue of the way I return my data
   });
+
+  // it('tests a specific get route', async () => {
+  //   const res = await request(app)
+  //     .get('/api/v1/puzzle/1');
+  //   expect(res.body.length).toEqual(2);
+  // });
 });

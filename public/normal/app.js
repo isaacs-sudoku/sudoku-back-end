@@ -1,10 +1,17 @@
 const puzzleRender = document.getElementById('puzzle');
+const difficulty = { body: 0.5 };
 
-async function getPuzzle() {
+async function getPuzzle(difficulty) {
   let unsolved = {};
-  const { body } = await fetch('http://localhost:8000/api/v1/puzzle/', { method: 'POST', mode: 'no-cors' })
-    .then(response => response.json())
-    .then(data => unsolved = data[0]);
+  let res = '';
+
+  while (!res) {
+    res = await fetch('http://localhost:8000/api/v1/puzzle/', { method: 'POST', body: JSON.stringify(difficulty), headers: {
+      'Content-type': 'application/json; charset=UTF-8'
+    } })
+      .then(response => response.json())
+      .then(data => unsolved = data[0]);
+  }
   const puzzle = [];
   puzzle[0] = unsolved.row1.split(',');
   puzzle[1] = unsolved.row2.split(',');
@@ -19,9 +26,9 @@ async function getPuzzle() {
   return puzzle;
 }
 
-async function renderPuzzle() {
+async function renderPuzzle(difficulty) {
   let puzzle = [];
-  puzzle = await getPuzzle()
+  puzzle = await getPuzzle(difficulty)
     .then(data => puzzle = data);
   let i = 0;
   while (i < 9) {
@@ -64,4 +71,4 @@ function findById(data, id) {
   });
   return 0;
 }
-const puzzle = renderPuzzle();
+const puzzle = renderPuzzle(difficulty);
