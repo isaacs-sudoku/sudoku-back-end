@@ -6,7 +6,7 @@ async function getPuzzle(difficulty) {
   let res = '';
 
   while (!res) {
-    res = await fetch('https://isaacs-sudoku.herokuapp.com/api/v1/puzzle/', { method: 'POST', body: JSON.stringify(difficulty), headers: {
+    res = await fetch('http://localhost:8000/api/v1/puzzle/', { method: 'POST', body: JSON.stringify(difficulty), headers: {
       'Content-type': 'application/json; charset=UTF-8'
     } })
       .then(response => response.json())
@@ -53,7 +53,6 @@ async function renderPuzzle(difficulty) {
       j++;
     }
     row.id = i;
-    console.log(row);
     puzzleRender.append(row);
     if (i === 2 || i === 5){
       const line = document.createElement('div');
