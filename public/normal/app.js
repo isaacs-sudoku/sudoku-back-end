@@ -6,7 +6,7 @@ async function getPuzzle(difficulty) {
   let res = '';
 
   while (!res) {
-    res = await fetch('http://localhost:8000/api/v1/puzzle/', { method: 'POST', body: JSON.stringify(difficulty), headers: {
+    res = await fetch('https://isaacs-sudoku.herokuapp.com/api/v1/puzzle/', { method: 'POST', body: JSON.stringify(difficulty), headers: {
       'Content-type': 'application/json; charset=UTF-8'
     } })
       .then(response => response.json())
