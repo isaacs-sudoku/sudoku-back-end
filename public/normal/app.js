@@ -1,5 +1,6 @@
 const puzzleRender = document.getElementById('puzzle');
 const difficulty = { body: 0.5 };
+const resetButton = document.getElementById('reset-button');
 
 async function getPuzzle(difficulty) {
   let unsolved = {};
@@ -27,6 +28,9 @@ async function getPuzzle(difficulty) {
 }
 
 async function renderPuzzle(difficulty) {
+  const check = document.createElement('span');
+  check.textContent = '1';
+  puzzleRender.append(check);
   let puzzle = [];
   puzzle = await getPuzzle(difficulty)
     .then(data => puzzle = data);
@@ -71,3 +75,8 @@ function findById(data, id) {
   return 0;
 }
 const puzzle = renderPuzzle(difficulty);
+const button = resetButton.addEventListener('click', () => {
+  while (puzzleRender.firstChild)
+    puzzleRender.removeChild(puzzleRender.firstChild)
+  renderPuzzle(difficulty);
+})
